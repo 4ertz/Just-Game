@@ -34,5 +34,4 @@ public class Health : MonoBehaviour
         _deadEffect.Play();
         gameObject.transform.DOScale(0, 0.3f);
     }
-
 }

@@ -46,6 +46,31 @@ public abstract class GunAbstract : MonoBehaviour
         _bulletsInMagazine = _magazine—apacity;
         _uiManager.SetBulletsText(_bulletsInMagazine);
     }
+    protected virtual void TargetTheEnemy(Collider2D collision)
+    {
+        if (collision.tag == "Enemy")
+        {
+            if (_mainTarget == null)
+            {
+                _mainTarget = collision.transform;
+            }
+            else if (Vector2.Distance(collision.transform.position, gameObject.transform.position) < Vector2.Distance(_mainTarget.position, gameObject.transform.position))
+            {
+                _mainTarget = collision.transform;
+            }
+            if (_mainTarget.position.x < _player.transform.position.x)
+            {
+                _player.transform.localRotation = Quaternion.Euler(0, 180, 0);
+                _player.GetComponent<PlayerMovement>()._canRotate = false;
+            }
+            if (_mainTarget.position.x > _player.transform.position.x)
+            {
+                _player.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                _player.GetComponent<PlayerMovement>()._canRotate = false;
+            }
+            _handTarget.position = Vector2.Lerp(_handTarget.position, _mainTarget.position, Time.deltaTime * _targetingTime);
+        }
+    }
     abstract protected void OnTriggerStay2D(Collider2D collision);
 
     abstract protected void OnTriggerExit2D(Collider2D collision);

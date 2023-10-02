@@ -18,5 +18,4 @@ public class StartScene : MonoBehaviour
         yield return new WaitForSeconds(2);
         _blackPanel.SetActive(false);
     }
-
 }

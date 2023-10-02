@@ -20,7 +20,6 @@ public class SaveSerial : MonoBehaviour
     public int _equipedGundIndexToLoad;
 
 
-
     private void Awake()
     {
         LoadGame();
@@ -44,7 +43,6 @@ public class SaveSerial : MonoBehaviour
         bf.Serialize(file, data);
         file.Close();
         Debug.Log("Game data saved!");
-
     }
 
     public void LoadGame()
@@ -98,11 +96,9 @@ class SaveData
     public List<float> _savedPlayer—oordinates = new List<float>();
     public int _savedEquipedGunIndex;
 
-
     public void Clear()
     {
         _savedItems.Clear();
         _savedItemsAmount.Clear();
     }
-
 }

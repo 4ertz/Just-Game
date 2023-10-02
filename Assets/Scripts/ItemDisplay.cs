@@ -15,7 +15,6 @@ public class ItemDisplay : MonoBehaviour
     private bool _open = false;
 
 
-
     void Start() 
     {
         _inventory = GameObject.Find("Player").GetComponent<Inventory>();
@@ -66,7 +65,6 @@ public class ItemDisplay : MonoBehaviour
         });
         deleteButton.GetComponent<Button>().onClick.AddListener(() =>
         {
-            Debug.Log("Index: " + _indexes.IndexOf(MyIndex));
             _inventory.RemoveItem(_indexes.IndexOf(MyIndex));
             RemoveIcon(_indexes.IndexOf(MyIndex));
             _indexes.RemoveAt(_indexes.IndexOf(MyIndex));
@@ -91,5 +89,4 @@ public class ItemDisplay : MonoBehaviour
         GameObject.Destroy(_icons[index]);  
         _icons.RemoveAt(index);
     }
-
 }

@@ -33,5 +33,4 @@ public class UiManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene(0);
     }
-
 }
