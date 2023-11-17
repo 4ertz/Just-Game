@@ -13,6 +13,7 @@ public class Ak47 : GunAbstract
     {
         _akBullet = _bullet.GetComponent<Bullet>();
         _akBullet.OverwriteDamage(_damage);
+        _shootButton = GameObject.Find("ShootButton").GetComponent<Button>();
         _reloadButton = GameObject.Find("ReloadBullet").GetComponent<Button>();
         Initialized();
         _initialized = true;
@@ -20,12 +21,17 @@ public class Ak47 : GunAbstract
 
     private void OnEnable() 
     {
-        _reloadButton?.onClick.AddListener(() => Reload()); 
-        if(_initialized) 
+        _shootButton?.onClick.RemoveAllListeners();
+
+        _reloadButton?.onClick.AddListener(() => Reload());
+        _shootButton?.onClick.AddListener(() => Shoot());
+
+        if (_initialized) 
              _uiManager.SetBulletsText(_bulletsInMagazine);
     }
     private void OnDisable() 
     {
+        _shootButton?.onClick.RemoveAllListeners();
         _reloadButton?.onClick.RemoveAllListeners();
         StopAllCoroutines();
     }

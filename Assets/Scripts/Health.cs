@@ -5,10 +5,11 @@ using DG.Tweening;
 
 public class Health : MonoBehaviour
 {
-    public UnityAction<int> _healthChanged;
+    public UnityAction _deadEvent;
 
     [SerializeField] private int _health;
     [SerializeField] private Slider _healthBar;
+
     private UiManager _uiManager;
     private ParticleSystem _deadEffect;
 
@@ -29,6 +30,7 @@ public class Health : MonoBehaviour
     }
     private void Dead()
     {
+        _deadEvent.Invoke();
         _uiManager.StartCoroutine(_uiManager.DeadScreen());
         _deadEffect.transform.position = transform.position;
         _deadEffect.Play();

@@ -8,20 +8,25 @@ public class Makarov : GunAbstract
     {
         _makarovBullet = _bullet.GetComponent<Bullet>();
         _makarovBullet.OverwriteDamage(_damage);
+        _shootButton = GameObject.Find("ShootButton").GetComponent<Button>();
         _reloadButton = GameObject.Find("ReloadBullet").GetComponent<Button>();
         Initialized();
         _initialized = true;
     }
     private void OnEnable() 
     {
-        _reloadButton?.onClick.AddListener(() => Reload()); 
+        _shootButton?.onClick.RemoveAllListeners();
+    
+        _reloadButton?.onClick.AddListener(() => Reload());
+        _shootButton?.onClick.AddListener(() => Shoot());
         if (_initialized)
             _uiManager.SetBulletsText(_bulletsInMagazine);
     }
     private void OnDisable()
     {
+        _shootButton?.onClick.RemoveAllListeners();
         _reloadButton?.onClick.RemoveAllListeners();
-        _initialized = true; StopAllCoroutines();
+        StopAllCoroutines();
     }
 
     override protected void OnTriggerStay2D(Collider2D collision)

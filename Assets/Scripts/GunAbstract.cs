@@ -5,6 +5,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CircleCollider2D))]
 public abstract class GunAbstract : MonoBehaviour
 {
+    public bool IsReload => _isReload;
+
     [SerializeField] protected GameObject _bullet;
     [SerializeField] protected GameObject _bulletSpawner;
     [SerializeField] protected Transform _handTarget; //“Ó˜Í‡ Í ÍÓÚÓÓÈ ÚˇÌÂÚÒˇ ÛÍ‡
@@ -13,20 +15,20 @@ public abstract class GunAbstract : MonoBehaviour
     [SerializeField] protected int _reloadTime;
     [SerializeField] protected int _magazine—apacity;
     [SerializeField] protected float _targetingTime; //—ÍÓÓÒÚ¸ Ì‡‚Â‰ÂÌËˇ
+
     protected Transform _mainTarget;
     protected GameObject _player;
     protected Button _reloadButton;
+    protected Button _shootButton;
     protected bool _isReload = false;
     protected int _bulletsInMagazine;
     protected bool _initialized;
     protected UiManager _uiManager;
-
-    public bool IsReload => _isReload;
-
+    protected bool _isAlive = true;
 
     virtual public void Shoot()
     {
-        if (!_isReload && _bulletsInMagazine > 0)
+        if (!_isReload && _bulletsInMagazine > 0 && _isAlive)
         {
             _bulletsInMagazine--;
             Instantiate(_bullet, _bulletSpawner.transform.position, _bulletSpawner.transform.rotation);
@@ -41,6 +43,7 @@ public abstract class GunAbstract : MonoBehaviour
 
     protected void Initialized()
     {
+         GameObject.Find("Player").GetComponent<Health>()._deadEvent += CharacterIsDead;
         _uiManager = GameObject.Find("Canvas").GetComponent<UiManager>();
         _player = GameObject.Find("Player");
         _bulletsInMagazine = _magazine—apacity;
@@ -48,7 +51,7 @@ public abstract class GunAbstract : MonoBehaviour
     }
     protected virtual void TargetTheEnemy(Collider2D collision)
     {
-        if (collision.tag == "Enemy")
+        if (collision.tag == "Enemy" && _isAlive)
         {
             if (_mainTarget == null)
             {
@@ -86,5 +89,9 @@ public abstract class GunAbstract : MonoBehaviour
             _uiManager.SetBulletsText(_bulletsInMagazine);
             _isReload = false;
         }
+    }
+    protected void CharacterIsDead()
+    {
+        _isAlive = false;
     }
 }
