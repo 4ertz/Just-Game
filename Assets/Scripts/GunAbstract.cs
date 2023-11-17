@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public abstract class GunAbstract : MonoBehaviour
 {
     public bool IsReload => _isReload;
+    public int _gunIndex { get;  protected set; }
 
     [SerializeField] protected GameObject _bullet;
     [SerializeField] protected GameObject _bulletSpawner;
@@ -25,10 +26,11 @@ public abstract class GunAbstract : MonoBehaviour
     protected bool _initialized;
     protected UiManager _uiManager;
     protected bool _isAlive = true;
+    protected GunSwitcher _gunSwitcher;
 
     virtual public void Shoot()
     {
-        if (!_isReload && _bulletsInMagazine > 0 && _isAlive)
+        if (!_isReload && _bulletsInMagazine > 0 && _isAlive && _gunSwitcher._gunIndex == _gunIndex)
         {
             _bulletsInMagazine--;
             Instantiate(_bullet, _bulletSpawner.transform.position, _bulletSpawner.transform.rotation);
@@ -43,6 +45,7 @@ public abstract class GunAbstract : MonoBehaviour
 
     protected void Initialized()
     {
+        _gunSwitcher = GameObject.Find("Player").GetComponent<GunSwitcher>();
          GameObject.Find("Player").GetComponent<Health>()._deadEvent += CharacterIsDead;
         _uiManager = GameObject.Find("Canvas").GetComponent<UiManager>();
         _player = GameObject.Find("Player");
@@ -74,13 +77,17 @@ public abstract class GunAbstract : MonoBehaviour
             _handTarget.position = Vector2.Lerp(_handTarget.position, _mainTarget.position, Time.deltaTime * _targetingTime);
         }
     }
+    public void SetBulletAmount()
+    {
+        _uiManager.SetBulletsText(_bulletsInMagazine);
+    }
     abstract protected void OnTriggerStay2D(Collider2D collision);
 
     abstract protected void OnTriggerExit2D(Collider2D collision);
     public void Reload() { StartCoroutine(ReloadCorutine()); }
     protected IEnumerator ReloadCorutine()
     {
-        if (_bulletsInMagazine < _magazineÑapacity && !_isReload)
+        if (_bulletsInMagazine < _magazineÑapacity && !_isReload && _gunSwitcher._gunIndex == _gunIndex)
         {
             _isReload = true;
             yield return new WaitForSeconds(_reloadTime);

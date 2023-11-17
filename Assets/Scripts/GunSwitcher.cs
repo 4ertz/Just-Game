@@ -3,8 +3,10 @@ using UnityEngine;
 public class GunSwitcher : MonoBehaviour
 {
    [SerializeField] GameObject[] _guns;
-   [SerializeField] GameObject[] _buttons;
    [SerializeField] private int _equpedGunIndex;
+
+    public int _gunIndex; //{ get; private set; }
+
     private SaveSerial _saver;
     private bool _isAlive = true;
 
@@ -15,11 +17,10 @@ public class GunSwitcher : MonoBehaviour
         _equpedGunIndex = _saver._equipedGundIndexToLoad;
         for (int i = 0; i < _guns.Length; i++)
         {
-            _guns[i].SetActive(false);
-            _buttons[i].SetActive(false);
+            _guns[i].GetComponent<SpriteRenderer>().enabled = false;
         }
-        _guns[_equpedGunIndex].SetActive(true);
-        //_buttons[_equpedGunIndex].SetActive(true);
+        _guns[_equpedGunIndex].GetComponent<SpriteRenderer>().enabled = true;
+        _gunIndex = _guns[_equpedGunIndex].GetComponent<GunAbstract>()._gunIndex;
     }
     public void SwitchGun()
     {
@@ -27,22 +28,21 @@ public class GunSwitcher : MonoBehaviour
         {
             if (_equpedGunIndex < _guns.Length - 1  && _guns[_equpedGunIndex].GetComponent<GunAbstract>().IsReload == false)
             {
-                _guns[_equpedGunIndex].SetActive(false);
-                //_buttons[_equpedGunIndex].SetActive(false);
+                _guns[_equpedGunIndex].GetComponent<SpriteRenderer>().enabled = false;
                 _equpedGunIndex++;
-                _guns[_equpedGunIndex].SetActive(true);
-                //_buttons[_equpedGunIndex].SetActive(true);
+                _gunIndex = _guns[_equpedGunIndex].GetComponent<GunAbstract>()._gunIndex;
+                _guns[_equpedGunIndex].GetComponent<SpriteRenderer>().enabled = true;
+                _guns[_equpedGunIndex].GetComponent<GunAbstract>().SetBulletAmount();
             }
             else if(_guns[_equpedGunIndex].GetComponent<GunAbstract>().IsReload == false)
             {
-                _guns[_equpedGunIndex].SetActive(false);
-                //_buttons[_equpedGunIndex].SetActive(false);
+                _guns[_equpedGunIndex].GetComponent<SpriteRenderer>().enabled = false;
                 _equpedGunIndex = 0;
-                _guns[_equpedGunIndex].SetActive(true);
-                //_buttons[_equpedGunIndex].SetActive(true);
-
+                _gunIndex = _guns[_equpedGunIndex].GetComponent<GunAbstract>()._gunIndex;
+                _guns[_equpedGunIndex].GetComponent<SpriteRenderer>().enabled = true;
+                _guns[_equpedGunIndex].GetComponent<GunAbstract>().SetBulletAmount();
             }
-             _saver._equipedGunIndexToSave = _equpedGunIndex;
+            _saver._equipedGunIndexToSave = _equpedGunIndex;
         }
     }
     private void CharacterIsDead()

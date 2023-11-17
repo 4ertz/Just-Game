@@ -13,21 +13,6 @@ public class Makarov : GunAbstract
         Initialized();
         _initialized = true;
     }
-    private void OnEnable() 
-    {
-        _shootButton?.onClick.RemoveAllListeners();
-    
-        _reloadButton?.onClick.AddListener(() => Reload());
-        _shootButton?.onClick.AddListener(() => Shoot());
-        if (_initialized)
-            _uiManager.SetBulletsText(_bulletsInMagazine);
-    }
-    private void OnDisable()
-    {
-        _shootButton?.onClick.RemoveAllListeners();
-        _reloadButton?.onClick.RemoveAllListeners();
-        StopAllCoroutines();
-    }
 
     override protected void OnTriggerStay2D(Collider2D collision)
     {
