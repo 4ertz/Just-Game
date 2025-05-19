@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using UnityEditor;
 
 public class SaveSerial : MonoBehaviour
 {
@@ -19,9 +20,18 @@ public class SaveSerial : MonoBehaviour
     public int _equipedGunIndexToSave;
     public int _equipedGundIndexToLoad;
 
+    private bool loadGameFrirstTime = true;
+
 
     private void Awake()
     {
+        loadGameFrirstTime = false;
+
+        if (loadGameFrirstTime)
+        {
+            SaveGame();
+            Debug.LogWarning("Data saved becose there is no data");
+        }
         LoadGame();
     }
     public void SaveGame()
@@ -66,7 +76,7 @@ public class SaveSerial : MonoBehaviour
             }
             for (int j = 0; j < 2; j++)
             {
-              _playerÑoordinatesLoadResault.Add(data._savedPlayerÑoordinates[j]);
+                _playerÑoordinatesLoadResault.Add(data._savedPlayerÑoordinates[j]);
             }
 
             Debug.Log("Game data loaded!");
@@ -87,6 +97,11 @@ public class SaveSerial : MonoBehaviour
         file.Close();
         Debug.Log("Game data was cleared!");
     }
+
+    //private void OnPlayModeStateChanged(PlayModeStateChange state)
+    //{
+    //    SaveGame();
+    //}
 }
 [Serializable]
 class SaveData

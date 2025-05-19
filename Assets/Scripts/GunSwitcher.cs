@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class GunSwitcher : MonoBehaviour
 {
-   [SerializeField] GameObject[] _guns;
-   [SerializeField] private int _equpedGunIndex;
+    [SerializeField] GameObject[] _guns;
+    [SerializeField] GameObject[] _shootButtons;
+    [SerializeField] private int _equpedGunIndex;
 
     public int _gunIndex; //{ get; private set; }
 
@@ -21,6 +22,13 @@ public class GunSwitcher : MonoBehaviour
         }
         _guns[_equpedGunIndex].GetComponent<SpriteRenderer>().enabled = true;
         _gunIndex = _guns[_equpedGunIndex].GetComponent<GunAbstract>()._gunIndex;
+        foreach (var button in _shootButtons)
+        {
+            button.SetActive(false);
+        }
+        _shootButtons[_equpedGunIndex].SetActive(true);
+
+
     }
     public void SwitchGun()
     {
@@ -33,6 +41,11 @@ public class GunSwitcher : MonoBehaviour
                 _gunIndex = _guns[_equpedGunIndex].GetComponent<GunAbstract>()._gunIndex;
                 _guns[_equpedGunIndex].GetComponent<SpriteRenderer>().enabled = true;
                 _guns[_equpedGunIndex].GetComponent<GunAbstract>().SetBulletAmount();
+                foreach (var button in _shootButtons)
+                {
+                    button.SetActive(false);
+                }
+                _shootButtons[_equpedGunIndex].SetActive(true);
             }
             else if(_guns[_equpedGunIndex].GetComponent<GunAbstract>().IsReload == false)
             {
@@ -41,6 +54,11 @@ public class GunSwitcher : MonoBehaviour
                 _gunIndex = _guns[_equpedGunIndex].GetComponent<GunAbstract>()._gunIndex;
                 _guns[_equpedGunIndex].GetComponent<SpriteRenderer>().enabled = true;
                 _guns[_equpedGunIndex].GetComponent<GunAbstract>().SetBulletAmount();
+                foreach (var button in _shootButtons)
+                {
+                    button.SetActive(false);
+                }
+                _shootButtons[_equpedGunIndex].SetActive(true);
             }
             _saver._equipedGunIndexToSave = _equpedGunIndex;
         }

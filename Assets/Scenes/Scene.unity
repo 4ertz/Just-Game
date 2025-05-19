@@ -15401,7 +15401,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 927370453}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1416047088}
+        m_TargetAssemblyTypeName: GunAbstract, Assembly-CSharp
+        m_MethodName: Reload
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1271193742}
+        m_TargetAssemblyTypeName: GunAbstract, Assembly-CSharp
+        m_MethodName: Reload
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &927370453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15936,7 +15960,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1271193742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15964,7 +15988,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1271193741}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -26619,10 +26643,11 @@ MonoBehaviour:
   _guns:
   - {fileID: 1416047083}
   - {fileID: 1271193741}
-  _buttons:
+  _shootButtons:
   - {fileID: 747927303}
   - {fileID: 997603782}
   _equpedGunIndex: 0
+  _gunIndex: 0
 --- !u!212 &1967214686312743259
 SpriteRenderer:
   m_ObjectHideFlags: 0

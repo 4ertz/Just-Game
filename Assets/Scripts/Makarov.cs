@@ -8,7 +8,7 @@ public class Makarov : GunAbstract
     {
         _makarovBullet = _bullet.GetComponent<Bullet>();
         _makarovBullet.OverwriteDamage(_damage);
-        _shootButton = GameObject.Find("ShootButton").GetComponent<Button>();
+        _shootButton = GameObject.Find("ShootButtonMakarov").GetComponent<Button>();
         _reloadButton = GameObject.Find("ReloadBullet").GetComponent<Button>();
         Initialized();
         _initialized = true;

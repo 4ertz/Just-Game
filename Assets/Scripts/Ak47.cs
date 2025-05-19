@@ -15,7 +15,7 @@ public class Ak47 : GunAbstract
 
         _akBullet = _bullet.GetComponent<Bullet>();
         _akBullet.OverwriteDamage(_damage);
-        _shootButton = GameObject.Find("ShootButton").GetComponent<Button>();
+        GameObject.Find("ShootButtonAk").SetActive(true);
         _reloadButton = GameObject.Find("ReloadBullet").GetComponent<Button>();
         Initialized();
         _initialized = true;
